@@ -1,0 +1,18 @@
+[
+  {
+    "model": "iZenAPI.noteboard",
+    "pk": 1,
+    "fields": {
+      "name": "What went well?",
+      "board_type": "positive"
+    }
+  },
+  {
+    "model": "iZenAPI.noteboard",
+    "pk": 2,
+    "fields": {
+      "name": "What didn't go well?",
+      "board_type": "negative"
+    }
+  }
+]
