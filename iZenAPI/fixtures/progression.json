@@ -1,0 +1,32 @@
+[
+  {
+    "model": "iZenAPI.progression",
+    "pk": 1,
+    "fields": {
+      "name": "Eating Healthier",
+      "description": "My dieting skills are hot garbage",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.progression",
+    "pk": 2,
+    "fields": {
+      "name": "React Hooks",
+      "description": "I'd like to have greater proficiency with hooks",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.progression",
+    "pk": 3,
+    "fields": {
+      "name": "Reading More Books",
+      "description": "Brain needs exercise so read more less tv",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "created_by_id": 1
+    }
+  }
+]
