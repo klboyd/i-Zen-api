@@ -3,3 +3,4 @@ from .note_board import NoteBoard
 from .progression import Progression
 from .retro import Retro
 from .retro_note_board import RetroNoteBoard
+from .note import Note

@@ -1,0 +1,90 @@
+[
+  {
+    "model": "iZenAPI.note",
+    "pk": 1,
+    "fields": {
+      "description": "The lettuce wraps were tasty with the tomatoes",
+      "created_at": "2020-03-04T19:49:51.172671Z",
+      "updated_at": "2020-03-04T19:49:51.172671Z",
+      "retro_note_board_id": 1,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 2,
+    "fields": {
+      "description": "Used that mixed cheese for the pizza that made it super tasty",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "updated_at": "2020-03-11T19:49:51.172671Z",
+      "retro_note_board_id": 1,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 3,
+    "fields": {
+      "description": "Forgot to fix the quinoa for weekday breakfast on Sunday",
+      "created_at": "2020-03-18T19:49:51.172671Z",
+      "updated_at": "2020-03-18T19:49:51.172671Z",
+      "retro_note_board_id": 2,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 4,
+    "fields": {
+      "description": "Bought a bunch of microwave food",
+      "created_at": "2020-03-04T19:49:51.172671Z",
+      "updated_at": "2020-03-04T19:49:51.172671Z",
+      "retro_note_board_id": 2,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 5,
+    "fields": {
+      "description": "Made breakfast every day this week :)",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "updated_at": "2020-03-11T19:49:51.172671Z",
+      "retro_note_board_id": 3,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 6,
+    "fields": {
+      "description": "Drank like a fish every night this week :(",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "updated_at": "2020-03-11T19:49:51.172671Z",
+      "retro_note_board_id": 4,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 7,
+    "fields": {
+      "description": "Enhanced the gooey noodle recpice with chives",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "updated_at": "2020-03-11T19:49:51.172671Z",
+      "retro_note_board_id": 5,
+      "created_by_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.note",
+    "pk": 8,
+    "fields": {
+      "description": "Built OrderDetail page in the group project with hooks",
+      "created_at": "2020-03-11T19:49:51.172671Z",
+      "updated_at": "2020-03-11T19:49:51.172671Z",
+      "retro_note_board_id": 7,
+      "created_by_id": 1
+    }
+  }
+]
