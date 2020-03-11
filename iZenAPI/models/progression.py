@@ -14,5 +14,5 @@ class Progression(models.Model):
         verbose_name = "progression"
         verbose_name_plural = "progressions"
 
-    def __str__():
+    def __str__(self):
         return f"{self.name} created at {self.created_at}"
