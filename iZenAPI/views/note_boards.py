@@ -7,7 +7,6 @@ from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
 from iZenAPI.models import NoteBoard
-from .users import UsersSerializer
 
 
 class NoteBoardsSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,7 +21,7 @@ class NoteBoardsSerializer(serializers.HyperlinkedModelSerializer):
         url = serializers.HyperlinkedIdentityField(
             view_name="note_board", lookup_field="id"
         )
-        fields = ("id", "name", "board_type")
+        fields = ("id", "url", "name", "board_type")
         depth = 2
 
 
