@@ -24,6 +24,7 @@ from iZenAPI.views import (
     NoteBoards,
     ActionItemStatuses,
     Progressions,
+    ActionItems,
 )
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -32,6 +33,7 @@ router.register(r"users", Users, "user")
 router.register(r"noteboards", NoteBoards, "note_board")
 router.register(r"actionitemstatus", ActionItemStatuses, "action_item_status")
 router.register(r"progressions", Progressions, "progression")
+router.register(r"actionitems", ActionItems, "action_item")
 
 urlpatterns = [
     path("", include(router.urls)),
