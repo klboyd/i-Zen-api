@@ -7,7 +7,6 @@ from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
 from iZenAPI.models import ActionItemStatus
-from .users import UsersSerializer
 
 
 class ActionItemStatusesSerializer(serializers.HyperlinkedModelSerializer):
@@ -24,6 +23,7 @@ class ActionItemStatusesSerializer(serializers.HyperlinkedModelSerializer):
         )
         fields = (
             "id",
+            "url",
             "name",
         )
         depth = 2
