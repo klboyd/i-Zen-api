@@ -1,0 +1,47 @@
+[
+  {
+    "model": "iZenAPI.actionitem",
+    "pk": 1,
+    "fields": {
+      "description": "Get a new spatula",
+      "created_at": "2020-03-04T19:49:51.172671Z",
+      "updated_at": "2020-03-04T19:49:51.172671Z",
+      "due_at": "2020-03-20T19:49:51.172671Z",
+      "completed_at": "2020-03-20T19:49:51.172671Z",
+      "status_id": 1,
+      "created_by_id": 1,
+      "completed_by_id": 1,
+      "progression_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.actionitem",
+    "pk": 2,
+    "fields": {
+      "description": "Make stir fry with szechuan sauce",
+      "created_at": "2020-03-04T19:49:51.172671Z",
+      "updated_at": "2020-03-04T19:49:51.172671Z",
+      "due_at": "2020-03-20T19:49:51.172671Z",
+      "completed_at": null,
+      "status_id": 1,
+      "created_by_id": 1,
+      "completed_by_id": 1,
+      "progression_id": 1
+    }
+  },
+  {
+    "model": "iZenAPI.actionitem",
+    "pk": 3,
+    "fields": {
+      "description": "Complete next chapter in Udemy course",
+      "created_at": "2020-03-04T19:49:51.172671Z",
+      "updated_at": "2020-03-04T19:49:51.172671Z",
+      "due_at": "2020-03-20T19:49:51.172671Z",
+      "completed_at": null,
+      "status_id": 1,
+      "created_by_id": 1,
+      "completed_by_id": 1,
+      "progression_id": 2
+    }
+  }
+]
