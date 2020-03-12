@@ -17,12 +17,19 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path
 from iZenAPI.models import *
-from iZenAPI.views import login_user, register_user, Users, NoteBoards
+from iZenAPI.views import (
+    login_user,
+    register_user,
+    Users,
+    NoteBoards,
+    ActionItemStatuses,
+)
 
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r"users", Users, "user")
 router.register(r"noteboards", NoteBoards, "note_board")
+router.register(r"actionitemstatus", ActionItemStatuses, "action_item_status")
 
 urlpatterns = [
     path("", include(router.urls)),
