@@ -66,6 +66,7 @@ class NoteBoards(ViewSet):
             Response -- Empty body with 204 status code
         """
         note_board = NoteBoard.objects.get(pk=pk)
+
         note_board.name = request.data["name"]
         note_board.board_type = request.data["board_type"]
         note_board.save()
