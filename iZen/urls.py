@@ -27,6 +27,7 @@ from iZenAPI.views import (
     ActionItems,
     Retros,
     RetroNoteBoards,
+    Notes,
 )
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -38,6 +39,7 @@ router.register(r"progressions", Progressions, "progression")
 router.register(r"actionitems", ActionItems, "actionitem")
 router.register(r"retros", Retros, "retro")
 router.register(r"retronoteboards", RetroNoteBoards, "retronoteboard")
+router.register(r"notes", Notes, "note")
 
 urlpatterns = [
     path("", include(router.urls)),
