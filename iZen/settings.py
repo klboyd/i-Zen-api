@@ -25,7 +25,7 @@ SECRET_KEY = "b%hpzlao3c*uxj##41d$5eipx(b@qk119)qw%z2s%9abb%gh)b"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "10.0.2.2"]
 
 
 # Application definition
@@ -67,7 +67,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000", "http://127.0.0.1:3000")
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://10.0.2.2:3000",
+)
 
 ROOT_URLCONF = "iZen.urls"
 
