@@ -5,5 +5,6 @@ from .progressions import Progressions, ProgressionsSerializer
 from .action_items import ActionItems, ActionItemsSerializer
 from .retros import Retros, RetrosSerializer
 from .retro_note_boards import RetroNoteBoards, RetroNoteBoardsSerializer
+from .notes import Notes, NotesSerializer
 from .login import login_user
 from .register import register_user
