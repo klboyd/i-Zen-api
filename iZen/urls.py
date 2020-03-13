@@ -30,10 +30,10 @@ from iZenAPI.views import (
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r"users", Users, "user")
-router.register(r"noteboards", NoteBoards, "note_board")
-router.register(r"actionitemstatus", ActionItemStatuses, "action_item_status")
+router.register(r"noteboards", NoteBoards, "noteboard")
+router.register(r"actionitemstatus", ActionItemStatuses, "actionitemstatus")
 router.register(r"progressions", Progressions, "progression")
-router.register(r"actionitems", ActionItems, "action_item")
+router.register(r"actionitems", ActionItems, "actionitem")
 
 urlpatterns = [
     path("", include(router.urls)),

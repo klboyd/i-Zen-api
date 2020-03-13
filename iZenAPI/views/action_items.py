@@ -56,9 +56,11 @@ class ActionItems(ViewSet):
         """
         new_action_item = ActionItem()
 
-        new_action_item.name = request.data["name"]
         new_action_item.description = request.data["description"]
+        new_action_item.due_at = request.data["due_at"]
         new_action_item.created_by_id = request.auth.user.id
+        new_action_item.status_id = request.data["status"]
+        new_action_item.progression_id = request.data["progression"]
 
         new_action_item.save()
 
