@@ -1,0 +1,1251 @@
+{
+	"info": {
+		"_postman_id": "5b548b27-f5f8-420f-965c-891530fcace7",
+		"name": "iZen-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c91582ec-1c69-41dc-911b-da94c9b91138",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"token\", data.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"username\": \"JamBat\", \"password\": \"booo\", \"first_name\": \"Jam\", \"last_name\": \"Bat\", \"email\": \"jc@email.com\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66915e1c-8329-477f-ac2f-c55f63736615",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.eql(200);",
+									"});",
+									"",
+									"pm.test(\"Login is valid\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.valid).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Login returns token\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.exist;",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"token\", data.token);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"username\": \"JamBat\", \n\t\"password\": \"booo\" \n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "user (one)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user (all)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "Token {{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "retro",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "noteboard",
+			"item": [
+				{
+					"name": "noteboards (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/noteboards",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"noteboards"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Tyke Bike",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Smyrna",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "noteboards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b61f06b-c1fc-4d1d-b6b3-b6ce38ac1c7b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"testing_id\", data.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Testing\",\n\t\"board_type\": \"testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/noteboards",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"noteboards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "noteboards (one)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/noteboards/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"noteboards",
+								"{{testing_id}}"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Tyke Bike",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Smyrna",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "noteboards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8516fd9e-e02b-4b5a-a16d-1e55feb28521",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"More Testing\",\n    \"board_type\": \"The Testiest\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/noteboards/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"noteboards",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "noteboards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb95c4f2-c114-4324-afcb-76ae95de2122",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"testing_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/noteboards/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"noteboards",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "actionitemstatus",
+			"item": [
+				{
+					"name": "actionitemstatus (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/actionitemstatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitemstatus"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Tyke Bike",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Smyrna",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitemstatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b61f06b-c1fc-4d1d-b6b3-b6ce38ac1c7b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"testing_id\", data.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitemstatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitemstatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitemstatus (one)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/actionitemstatus/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitemstatus",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitemstatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8516fd9e-e02b-4b5a-a16d-1e55feb28521",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"More Testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitemstatus/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitemstatus",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitemstatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb95c4f2-c114-4324-afcb-76ae95de2122",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"testing_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitemstatus/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitemstatus",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "progressions",
+			"item": [
+				{
+					"name": "progressions (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/progressions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progressions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "progressions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b61f06b-c1fc-4d1d-b6b3-b6ce38ac1c7b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"testing_id\", data.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Testing\",\n\t\"description\": \"Testable description\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/progressions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progressions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "progressions (one)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/progressions/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progressions",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "progressions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8516fd9e-e02b-4b5a-a16d-1e55feb28521",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Testing to the Max\",\n\t\"description\": \"Testable description of testingly quality\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/progressions/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progressions",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "progressions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb95c4f2-c114-4324-afcb-76ae95de2122",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"testing_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/progressions/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progressions",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "actionitems",
+			"item": [
+				{
+					"name": "actionitems (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/actionitems",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b61f06b-c1fc-4d1d-b6b3-b6ce38ac1c7b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"testing_id\", data.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"Test all up in here\",\n    \"due_at\": \"2020-03-20T19:49:51.172671Z\",\n    \"created_by\": 1,\n    \"created_at\": \"2020-03-04T19:49:51.172671Z\",\n    \"updated_at\": \"2020-03-04T19:49:51.172671Z\",\n    \"completed_by\": 1,\n    \"completed_at\": \"2020-03-20T19:49:51.172671Z\",\n    \"status\": 1,\n    \"progression\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitems",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitems (one)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef266344-a2eb-41e3-852c-f6aa9482d7df",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/actionitems/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitems",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8516fd9e-e02b-4b5a-a16d-1e55feb28521",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Testing to the Max\",\n\t\"description\": \"Testable description of testingly quality\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitems/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitems",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actionitems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb95c4f2-c114-4324-afcb-76ae95de2122",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"testing_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/actionitems/{{testing_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actionitems",
+								"{{testing_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "retronoteboard",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "note",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "actionitem",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "73c0dd14-bf0a-430f-8d43-d004dc8ea0f3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b1cc270a-4daa-4c8d-93eb-b1cdc4b548a1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "92404e91-a3af-480e-91ba-bc8a3cfc9d7c",
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"id": "bb51aab9-d411-46a0-8323-0717f7254f19",
+			"key": "token",
+			"value": "1546aa33244dcc90814e9a3e7ed2d7a111bb683d",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

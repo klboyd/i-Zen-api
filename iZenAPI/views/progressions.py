@@ -25,7 +25,7 @@ class ProgressionsSerializer(serializers.HyperlinkedModelSerializer):
             view_name="progression", lookup_field="id"
         )
         fields = ("id", "url", "name", "description", "created_at", "created_by")
-        depth = 1
+        depth = 0
 
 
 class Progressions(ViewSet):
