@@ -11,10 +11,18 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import platform
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# get network ip address for external device testing while running on a mac
+TEST_ADDR = "localhost"
+if platform.system() == "Darwin":
+    stream = os.popen("ipconfig getifaddr en0")
+    output = stream.read()
+    TEST_ADDR = output.rstrip()
+    print("TEST_ADDR", TEST_ADDR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -25,7 +33,7 @@ SECRET_KEY = "b%hpzlao3c*uxj##41d$5eipx(b@qk119)qw%z2s%9abb%gh)b"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "10.0.2.2"]
+ALLOWED_HOSTS = [TEST_ADDR, "127.0.0.1", "10.0.2.2"]
 
 
 # Application definition
