@@ -22,7 +22,6 @@ if platform.system() == "Darwin":
     stream = os.popen("ipconfig getifaddr en0")
     output = stream.read()
     TEST_ADDR = output.rstrip()
-    print("TEST_ADDR", TEST_ADDR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
