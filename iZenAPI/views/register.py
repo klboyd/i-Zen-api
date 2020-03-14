@@ -14,12 +14,16 @@ def register_user(request):
 
     req_body = json.loads(request.body.decode())
 
+    email = req_body.get("email")
+    first_name = req_body.get("first_name") or ""
+    last_name = req_body.get("last_name") or ""
+
     new_user = User.objects.create_user(
         username=req_body["username"],
-        email=req_body["email"],
+        email=email,
         password=req_body["password"],
-        first_name=req_body["first_name"],
-        last_name=req_body["last_name"],
+        first_name=first_name,
+        last_name=last_name,
         is_active=True,
     )
 
