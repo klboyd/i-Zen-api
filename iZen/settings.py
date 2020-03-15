@@ -32,7 +32,7 @@ SECRET_KEY = "b%hpzlao3c*uxj##41d$5eipx(b@qk119)qw%z2s%9abb%gh)b"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [TEST_ADDR, "127.0.0.1", "10.0.2.2"]
+ALLOWED_HOSTS = [TEST_ADDR, "127.0.0.1", "10.0.2.2", "localhost"]
 
 
 # Application definition
@@ -78,6 +78,7 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://10.0.2.2:3000",
+    f"http://{TEST_ADDR}:19006",
 )
 
 ROOT_URLCONF = "iZen.urls"
