@@ -110,7 +110,9 @@ class Progressions(ViewSet):
             Response -- JSON serialized list of progressions
         """
 
-        progressions = Progression.objects.all()
+        user_id = request.auth.user.id
+
+        progressions = Progression.objects.filter(created_by__id=user_id)
 
         serializer = ProgressionsSerializer(
             progressions, many=True, context={"request": request}
