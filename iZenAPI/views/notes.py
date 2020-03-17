@@ -85,7 +85,7 @@ class Notes(ViewSet):
 
         note.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single note
@@ -97,7 +97,7 @@ class Notes(ViewSet):
             note = Note.objects.get(pk=pk)
             note.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Notes.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)

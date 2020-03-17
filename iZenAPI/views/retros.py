@@ -68,16 +68,23 @@ class Retros(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
-        retro = Retro.objects.get(pk=pk)
+        try:
+            retro = Retro.objects.get(pk=pk)
 
-        retro.name = request.data["name"]
-        retro.progression_id = retro.progression_id
-        retro.created_at = retro.created_at
-        retro.created_by_id = retro.created_by_id
+            retro.name = request.data["name"]
+            retro.progression_id = retro.progression_id
+            retro.created_at = retro.created_at
+            retro.created_by_id = retro.created_by_id
 
-        retro.save()
+            retro.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Retros.DoesNotExist as ex:
+            return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as ex:
+            return Response(
+                {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single retro
@@ -89,7 +96,7 @@ class Retros(ViewSet):
             retro = Retro.objects.get(pk=pk)
             retro.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Retros.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
