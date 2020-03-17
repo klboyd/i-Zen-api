@@ -72,16 +72,25 @@ class Progressions(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
-        progression = Progression.objects.get(pk=pk)
+        try:
+            progression = Progression.objects.get(pk=pk)
 
-        progression.name = request.data["name"]
-        progression.description = request.data["description"]
-        progression.created_at = progression.created_at
-        progression.created_by_id = progression.created_by_id
+            progression.name = request.data["name"]
+            progression.description = request.data["description"]
+            progression.created_at = progression.created_at
+            progression.created_by_id = progression.created_by_id
 
-        progression.save()
+            progression.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except Progressions.DoesNotExist as ex:
+            return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response(
+                {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single progression
@@ -89,12 +98,11 @@ class Progressions(ViewSet):
         Returns:
             Response -- 200, 404, or 500 status code
         """
-        serializer = ProgressionsSerializer(context={"request": request})
         try:
             progression = Progression.objects.get(pk=pk)
             progression.delete()
 
-            return Response(serializer.data)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Progressions.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)

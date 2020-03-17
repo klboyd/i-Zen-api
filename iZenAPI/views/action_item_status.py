@@ -76,7 +76,7 @@ class ActionItemStatuses(ViewSet):
         action_item_status.name = request.data["name"]
         action_item_status.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single action_item_status
@@ -88,7 +88,7 @@ class ActionItemStatuses(ViewSet):
             action_item_status = ActionItemStatus.objects.get(pk=pk)
             action_item_status.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except ActionItemStatuses.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)

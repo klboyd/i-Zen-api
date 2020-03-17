@@ -70,7 +70,7 @@ class NoteBoards(ViewSet):
         note_board.board_type = request.data["board_type"]
         note_board.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single note_board
@@ -82,7 +82,7 @@ class NoteBoards(ViewSet):
             note_board = NoteBoard.objects.get(pk=pk)
             note_board.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except NoteBoard.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)

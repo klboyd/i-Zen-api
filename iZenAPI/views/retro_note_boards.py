@@ -78,7 +78,7 @@ class RetroNoteBoards(ViewSet):
             retro_note_board = RetroNoteBoard.objects.get(pk=pk)
             retro_note_board.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except RetroNoteBoards.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
