@@ -113,7 +113,12 @@ class Retros(ViewSet):
             Response -- JSON serialized list of retros
         """
 
-        retros = Retro.objects.all()
+        progression_id = self.request.query_params.get("progression", None)
+
+        if progression_id is not None:
+            retros = Retro.objects.filter(progression__id=progression_id)
+        else:
+            retros = Retro.objects.all()
 
         serializer = RetrosSerializer(retros, many=True, context={"request": request})
         return Response(serializer.data)
