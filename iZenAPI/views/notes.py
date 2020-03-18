@@ -33,7 +33,7 @@ class NotesSerializer(serializers.HyperlinkedModelSerializer):
             "updated_at",
             "retro_note_board",
         )
-        depth = 2
+        # depth = 0
 
 
 class Notes(ViewSet):
@@ -113,8 +113,11 @@ class Notes(ViewSet):
         Returns:
             Response -- JSON serialized list of notes
         """
+        retro_id = self.request.query_params.get("retro", None)
 
-        notes = Note.objects.all()
+        notes = Note.objects.filter(retro_note_board__retro__id=retro_id).order_by(
+            "-retro_note_board__note_board__board_type"
+        )
 
         serializer = NotesSerializer(notes, many=True, context={"request": request})
         return Response(serializer.data)

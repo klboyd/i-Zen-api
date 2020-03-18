@@ -26,7 +26,7 @@ class ActionItemStatusesSerializer(serializers.HyperlinkedModelSerializer):
             "url",
             "name",
         )
-        depth = 2
+        # depth = 0
 
 
 class ActionItemStatuses(ViewSet):

@@ -22,7 +22,7 @@ class NoteBoardsSerializer(serializers.HyperlinkedModelSerializer):
             view_name="note_board", lookup_field="id"
         )
         fields = ("id", "url", "name", "board_type")
-        depth = 2
+        # depth = 0
 
 
 class NoteBoards(ViewSet):
