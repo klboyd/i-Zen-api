@@ -9,6 +9,7 @@ from rest_framework.decorators import action
 from iZenAPI.models import Retro
 from .users import UsersSerializer
 from .progressions import ProgressionsSerializer
+from datetime import date
 
 
 class RetrosSerializer(serializers.HyperlinkedModelSerializer):
@@ -29,7 +30,7 @@ class RetrosSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class Retros(ViewSet):
-    """note boards for iZenAPI"""
+    """retros for iZenAPI"""
 
     def create(self, request):
         """Handle POST operations
@@ -37,17 +38,24 @@ class Retros(ViewSet):
         Returns:
             Response -- JSON serialized Retros instance
         """
-        new_retro = Retro()
+        today = date.today().strftime("%A %b %d, %Y")
+        progression_id = request.data["progression_id"]
+        duplicate = Retro.objects.filter(progression__id=progression_id, name=today)
 
-        new_retro.name = request.data["name"]
-        new_retro.progression_id = request.data["progression_id"]
-        new_retro.created_by_id = request.auth.user.id
+        if len(duplicate) == 0:
+            new_retro = Retro()
 
-        new_retro.save()
+            new_retro.name = today
+            new_retro.progression_id = progression_id
+            new_retro.created_by_id = request.auth.user.id
 
-        serializer = RetrosSerializer(new_retro, context={"request": request})
+            new_retro.save()
 
-        return Response(serializer.data)
+            serializer = RetrosSerializer(new_retro, context={"request": request})
+
+            return Response(serializer.data)
+        else:
+            return Response({}, status=status.HTTP_302_FOUND)
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single retro
