@@ -42,7 +42,7 @@ class ActionItemsSerializer(serializers.HyperlinkedModelSerializer):
             "status",
             "progression",
         )
-        depth = 1
+        # depth = 0
 
 
 class ActionItems(ViewSet):

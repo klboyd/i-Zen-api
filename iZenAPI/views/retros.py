@@ -26,7 +26,7 @@ class RetrosSerializer(serializers.HyperlinkedModelSerializer):
         model = Retro
         url = serializers.HyperlinkedIdentityField(view_name="retro", lookup_field="id")
         fields = ("id", "url", "name", "created_by", "created_at", "progression")
-        depth = 2
+        # depth = 0
 
 
 class Retros(ViewSet):

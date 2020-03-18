@@ -28,7 +28,7 @@ class RetroNoteBoardsSerializer(serializers.HyperlinkedModelSerializer):
             view_name="retro_note_board", lookup_field="id"
         )
         fields = ("id", "url", "retro", "note_board")
-        depth = 2
+        # depth = 0
 
 
 class RetroNoteBoards(ViewSet):
@@ -95,7 +95,12 @@ class RetroNoteBoards(ViewSet):
             Response -- JSON serialized list of retro_note_boards
         """
 
-        retro_note_boards = RetroNoteBoard.objects.all()
+        retro_id = self.request.query_params.get("retro", None)
+
+        if retro_id is not None:
+            retro_note_boards = RetroNoteBoard.objects.filter(retro__id=retro_id)
+        else:
+            retro_note_boards = RetroNoteBoard.objects.all()
 
         serializer = RetroNoteBoardsSerializer(
             retro_note_boards, many=True, context={"request": request}
