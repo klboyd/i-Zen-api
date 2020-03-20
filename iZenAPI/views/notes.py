@@ -114,10 +114,14 @@ class Notes(ViewSet):
             Response -- JSON serialized list of notes
         """
         retro_id = self.request.query_params.get("retro", None)
+        board_id = self.request.query_params.get("board", None)
 
-        notes = Note.objects.filter(retro_note_board__retro__id=retro_id).order_by(
-            "-retro_note_board__note_board__board_type"
-        )
+        if retro_id is not None:
+            notes = Note.objects.filter(retro_note_board__retro__id=retro_id).order_by(
+                "-retro_note_board__note_board__board_type"
+            )
+        if board_id is not None:
+            notes = Note.objects.filter(retro_note_board__id=board_id)
 
         serializer = NotesSerializer(notes, many=True, context={"request": request})
         return Response(serializer.data)

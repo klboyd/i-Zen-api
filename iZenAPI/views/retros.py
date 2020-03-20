@@ -7,6 +7,8 @@ from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
 from iZenAPI.models import Retro
+from iZenAPI.models import RetroNoteBoard
+from iZenAPI.models import NoteBoard
 from .users import UsersSerializer
 from .progressions import ProgressionsSerializer
 from datetime import date
@@ -50,6 +52,15 @@ class Retros(ViewSet):
             new_retro.created_by_id = request.auth.user.id
 
             new_retro.save()
+
+            note_boards = NoteBoard.objects.all()
+
+            for board in note_boards:
+                new_retro_note_board = RetroNoteBoard()
+                new_retro_note_board.retro_id = new_retro.id
+                new_retro_note_board.note_board_id = board.id
+
+                new_retro_note_board.save()
 
             serializer = RetrosSerializer(new_retro, context={"request": request})
 
