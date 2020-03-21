@@ -48,7 +48,7 @@ class Notes(ViewSet):
         new_note = Note()
 
         new_note.description = request.data["description"]
-        new_note.retro_note_board_id = request.data["retro_note_board_id"]
+        new_note.retro_note_board_id = request.data["board_id"]
         new_note.created_by_id = request.auth.user.id
 
         new_note.save()
