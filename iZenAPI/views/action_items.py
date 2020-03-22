@@ -6,10 +6,13 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
-from iZenAPI.models import Progression, ActionItem
+from iZenAPI.models import Progression, ActionItem, ActionItemStatus
 from .users import UsersSerializer
 from .progressions import ProgressionsSerializer
 from .action_item_status import ActionItemStatusesSerializer
+from datetime import datetime
+from django.utils.timezone import get_current_timezone
+
 
 
 class ActionItemsSerializer(serializers.HyperlinkedModelSerializer):
@@ -54,12 +57,13 @@ class ActionItems(ViewSet):
         Returns:
             Response -- JSON serialized ActionItems instance
         """
+        pending_status = ActionItemStatus.objects.get(name="pending")
         new_action_item = ActionItem()
 
         new_action_item.description = request.data["description"]
         new_action_item.due_at = request.data["due_at"]
         new_action_item.created_by_id = request.auth.user.id
-        new_action_item.status_id = request.data["status"]
+        new_action_item.status_id = pending_status.id
         new_action_item.progression_id = request.data["progression"]
 
         new_action_item.save()
@@ -93,10 +97,26 @@ class ActionItems(ViewSet):
         """
         action_item = ActionItem.objects.get(pk=pk)
 
-        action_item.name = request.data["name"]
         action_item.description = request.data["description"]
-        action_item.created_at = action_item.created_at
-        action_item.created_by_id = action_item.created_by_id
+
+        action_item.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def patch(self, request, pk=None):
+        """Handle PATCH requests for a action_item
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        action_item = ActionItem.objects.get(pk=pk)
+        complete_status = ActionItemStatus.objects.get(name="completed")
+
+
+        action_item.completed_at = datetime.now(tz=get_current_timezone())
+        action_item.completed_by_id = request.auth.user.id
+        action_item.status_id = complete_status.id
+
 
         action_item.save()
 
@@ -129,7 +149,12 @@ class ActionItems(ViewSet):
             Response -- JSON serialized list of action_items
         """
 
-        action_items = ActionItem.objects.all()
+        progression_id = self.request.query_params.get("progression", None)
+
+        if progression_id is not None:
+            action_items = ActionItem.objects.filter(progression__id=progression_id).order_by("status_id", "created_at")
+        else:
+            action_items = ActionItem.objects.all()
 
         serializer = ActionItemsSerializer(
             action_items, many=True, context={"request": request}
