@@ -12,7 +12,8 @@ from .progressions import ProgressionsSerializer
 from .action_item_status import ActionItemStatusesSerializer
 from datetime import datetime
 from django.utils.timezone import get_current_timezone
-
+from rest_framework.decorators import action
+from django.db.models import Count
 
 
 class ActionItemsSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,7 +50,19 @@ class ActionItemsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ActionItems(ViewSet):
-    """note boards for iZenAPI"""
+    """action_items for iZenAPI"""
+
+    @action(methods=["get"], detail=False, url_name="total_open")
+    def total_open(self, request):
+        """Handles getting the total open action_items for a progression"""
+
+        progression_id = self.request.query_params.get("progression", None)
+
+        action_item_count = ActionItem.objects.filter(
+            progression__id=progression_id, status__name="pending"
+        ).aggregate(total=Count("id"))
+        print("action item count:", action_item_count)
+        return Response(action_item_count)
 
     def create(self, request):
         """Handle POST operations
@@ -102,7 +115,7 @@ class ActionItems(ViewSet):
         action_item.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     def patch(self, request, pk=None):
         """Handle PATCH requests for a action_item
 
@@ -112,11 +125,9 @@ class ActionItems(ViewSet):
         action_item = ActionItem.objects.get(pk=pk)
         complete_status = ActionItemStatus.objects.get(name="completed")
 
-
         action_item.completed_at = datetime.now(tz=get_current_timezone())
         action_item.completed_by_id = request.auth.user.id
         action_item.status_id = complete_status.id
-
 
         action_item.save()
 
@@ -152,7 +163,9 @@ class ActionItems(ViewSet):
         progression_id = self.request.query_params.get("progression", None)
 
         if progression_id is not None:
-            action_items = ActionItem.objects.filter(progression__id=progression_id).order_by("status_id", "created_at")
+            action_items = ActionItem.objects.filter(
+                progression__id=progression_id
+            ).order_by("status_id", "created_at")
         else:
             action_items = ActionItem.objects.all()
 
