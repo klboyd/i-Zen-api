@@ -61,7 +61,7 @@ class ActionItems(ViewSet):
         action_item_count = ActionItem.objects.filter(
             progression__id=progression_id, status__name="pending"
         ).aggregate(total=Count("id"))
-        print("action item count:", action_item_count)
+
         return Response(action_item_count)
 
     def create(self, request):
