@@ -17,7 +17,7 @@ django-cors-headers==3.2.1
 django-credit-cards==0.4.1
 django-filter==2.2.0
 django-safedelete==0.5.4
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 emoji==0.5.4
 feedfinder2==0.0.4
 feedparser==5.2.1
