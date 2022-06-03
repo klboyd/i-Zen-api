@@ -5,7 +5,7 @@ attrs==19.3.0
 autopep8==1.5
 beautifulsoup4==4.8.2
 black==19.10b0
-bottle==0.12.18
+bottle==0.12.20
 cachelib==0.1
 certifi==2019.11.28
 chardet==3.0.4
